@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E42075D323835136001A4D21 /* MathCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42075D223835136001A4D21 /* MathCircle.swift */; };
 		E44E931023821670001817BB /* MathCircleKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E44E93062382166F001817BB /* MathCircleKit.framework */; };
 		E44E931523821670001817BB /* MathCircleKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44E931423821670001817BB /* MathCircleKitTests.swift */; };
 		E44E931723821670001817BB /* MathCircleKit.h in Headers */ = {isa = PBXBuildFile; fileRef = E44E93092382166F001817BB /* MathCircleKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -26,6 +27,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E42075D223835136001A4D21 /* MathCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathCircle.swift; sourceTree = "<group>"; };
 		E44E93062382166F001817BB /* MathCircleKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MathCircleKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E44E93092382166F001817BB /* MathCircleKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MathCircleKit.h; sourceTree = "<group>"; };
 		E44E930A2382166F001817BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -80,6 +82,7 @@
 				E44E93202382175A001817BB /* Array.swift */,
 				E44E93222382175A001817BB /* CircleEquation.swift */,
 				E44E93212382175A001817BB /* Drawing.swift */,
+				E42075D223835136001A4D21 /* MathCircle.swift */,
 				E44E93092382166F001817BB /* MathCircleKit.h */,
 				E44E930A2382166F001817BB /* Info.plist */,
 			);
@@ -208,6 +211,7 @@
 				E44E93242382175A001817BB /* Drawing.swift in Sources */,
 				E44E93232382175A001817BB /* Array.swift in Sources */,
 				E44E93252382175A001817BB /* CircleEquation.swift in Sources */,
+				E42075D323835136001A4D21 /* MathCircle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

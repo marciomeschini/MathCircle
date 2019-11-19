@@ -70,12 +70,25 @@ extension Arc {
     return .init(circle, start: end, end: start, clockwise: !clockwise)
   }
   
-  public func mid(with arc: Arc) -> CGPoint {
+  public func mid(with arc: Arc) -> MidPoint {
     let dt = end - start
     let t = start + dt*0.5
     let dr = circle.radius - arc.circle.radius
     let r = arc.circle.radius + dr*0.5
-    return Circle(center: circle.center, radius: r, start: circle.start).point(at: t)
+    let p = Circle(center: circle.center, radius: r, start: circle.start).point(at: t)
+    return MidPoint(point: p, t: t)
+  }
+}
+
+// MARK: -
+
+public struct MidPoint {
+  public let point: CGPoint
+  public let t: CGFloat
+  
+  public init(point: CGPoint, t: CGFloat) {
+    self.point = point
+    self.t = t
   }
 }
 
