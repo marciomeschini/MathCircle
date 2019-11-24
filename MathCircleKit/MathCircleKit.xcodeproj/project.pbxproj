@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		E42075D323835136001A4D21 /* MathCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42075D223835136001A4D21 /* MathCircle.swift */; };
+		E438C0E3238A049C003EC5F4 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = E438C0E2238A049C003EC5F4 /* Game.swift */; };
+		E438C0E5238A055D003EC5F4 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E438C0E4238A055D003EC5F4 /* GameView.swift */; };
+		E438C0E7238A05B4003EC5F4 /* CustomLayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E438C0E6238A05B4003EC5F4 /* CustomLayerView.swift */; };
 		E44E931023821670001817BB /* MathCircleKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E44E93062382166F001817BB /* MathCircleKit.framework */; };
 		E44E931523821670001817BB /* MathCircleKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44E931423821670001817BB /* MathCircleKitTests.swift */; };
 		E44E931723821670001817BB /* MathCircleKit.h in Headers */ = {isa = PBXBuildFile; fileRef = E44E93092382166F001817BB /* MathCircleKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -28,6 +31,9 @@
 
 /* Begin PBXFileReference section */
 		E42075D223835136001A4D21 /* MathCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathCircle.swift; sourceTree = "<group>"; };
+		E438C0E2238A049C003EC5F4 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		E438C0E4238A055D003EC5F4 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		E438C0E6238A05B4003EC5F4 /* CustomLayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLayerView.swift; sourceTree = "<group>"; };
 		E44E93062382166F001817BB /* MathCircleKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MathCircleKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E44E93092382166F001817BB /* MathCircleKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MathCircleKit.h; sourceTree = "<group>"; };
 		E44E930A2382166F001817BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -80,8 +86,11 @@
 			isa = PBXGroup;
 			children = (
 				E44E93202382175A001817BB /* Array.swift */,
+				E438C0E6238A05B4003EC5F4 /* CustomLayerView.swift */,
 				E44E93222382175A001817BB /* CircleEquation.swift */,
 				E44E93212382175A001817BB /* Drawing.swift */,
+				E438C0E2238A049C003EC5F4 /* Game.swift */,
+				E438C0E4238A055D003EC5F4 /* GameView.swift */,
 				E42075D223835136001A4D21 /* MathCircle.swift */,
 				E44E93092382166F001817BB /* MathCircleKit.h */,
 				E44E930A2382166F001817BB /* Info.plist */,
@@ -209,8 +218,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				E44E93242382175A001817BB /* Drawing.swift in Sources */,
+				E438C0E3238A049C003EC5F4 /* Game.swift in Sources */,
 				E44E93232382175A001817BB /* Array.swift in Sources */,
 				E44E93252382175A001817BB /* CircleEquation.swift in Sources */,
+				E438C0E7238A05B4003EC5F4 /* CustomLayerView.swift in Sources */,
+				E438C0E5238A055D003EC5F4 /* GameView.swift in Sources */,
 				E42075D323835136001A4D21 /* MathCircle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
