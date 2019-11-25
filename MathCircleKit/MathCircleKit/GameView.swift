@@ -3,11 +3,11 @@ import UIKit
 public final class GameView: UIView {
   private(set) var mathCircle: MathCircle = MathCircle(side: 1, center: .zero, count: 1, countOfCircles: 1)
   private(set) var game: Game = Game(count: 1, factor: 1)
-  let pathView: ShapeLayerView
-  let coverView: ShapeLayerView
-  let correctView: ShapeLayerView
-  let errorView: ShapeLayerView
-  let selectionView: ShapeLayerView
+  let pathView: CustomLayerView<CAShapeLayer>
+  let coverView: CustomLayerView<CAShapeLayer>
+  let correctView: CustomLayerView<CAShapeLayer>
+  let errorView: CustomLayerView<CAShapeLayer>
+  let selectionView: CustomLayerView<CAShapeLayer>
   let bitmapView = UIImageView()
   let label = UILabel()
   let textField = UITextField()
@@ -15,25 +15,25 @@ public final class GameView: UIView {
   public var completed: (Game) -> Void = { _ in }
   
   public override init(frame: CGRect) {
-    pathView = shapeLayerView(frame: CGRect(origin: .zero, size: frame.size))
-    coverView = shapeLayerView(
-      frame: CGRect(origin: .zero, size: frame.size),
+    pathView = CustomLayerView(shapeWithFrame: CGRect(origin: .zero, size: frame.size))
+    coverView = CustomLayerView(
+      shapeWithFrame: CGRect(origin: .zero, size: frame.size),
       stroke: .black,
       fill: UIColor.white//.withAlphaComponent(0.75)
     )
-    correctView = shapeLayerView(
-      frame: CGRect(origin: .zero, size: frame.size),
+    correctView = CustomLayerView(
+      shapeWithFrame: CGRect(origin: .zero, size: frame.size),
       stroke: .black,
       fill: .green
     )
-    errorView = shapeLayerView(
-      frame: CGRect(origin: .zero, size: frame.size),
+    errorView = CustomLayerView(
+      shapeWithFrame: CGRect(origin: .zero, size: frame.size),
       stroke: .black,
       fill: .red
     )
-    selectionView = shapeLayerView(
-      frame: CGRect(origin: .zero, size: frame.size),
-      stroke: .red,
+    selectionView = CustomLayerView(
+      shapeWithFrame: CGRect(origin: .zero, size: frame.size),
+      stroke: .black,
       fill: UIColor.blue.withAlphaComponent(0.2)
     )
     selectionView.customLayer.lineWidth = 2
@@ -62,13 +62,12 @@ public final class GameView: UIView {
     
     bitmapView.image = makeBitmap(mathCircle: mathCircle, game: game, size: bounds.size)
     
-    updateCovers()
+    updateSlices()
     
     label.text = "\(game.factor)"
     label.sizeToFit()
     textField.frame = CGRect(x: 0, y: 0, width: 130, height: 40)
     textField.center = CGPoint(x: bounds.midX, y: bounds.midY)
-//    [textField, label].forEach { $0.layer.borderWidth = 1 }
     
     let nextButton = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(next(_:)))
     let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
@@ -108,7 +107,7 @@ public final class GameView: UIView {
     return filter(.missing).count == 0
   }
   
-  private func updateCovers() {
+  private func updateSlices() {
     let filter: (Game.Answer) -> [Drawing] = { filter in
       return zip(self.mathCircle.slices[1], self.game.answers).filter { $0.1 == filter }.map { $0.0 }
     }
@@ -157,10 +156,11 @@ public final class GameView: UIView {
       print(answer)
     }
     
-    updateCovers()
+    updateSlices()
     
     if isFinished() {
       print("isFinished!")
+      selectionView.customLayer.path = nil
       completed(game)
       return
     }

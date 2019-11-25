@@ -10,7 +10,7 @@ class ViewController: UIViewController {
     view.backgroundColor = .systemGroupedBackground
 
     let side: CGFloat = view.bounds.width
-    let frame = CGRect(x: 0, y: 20, width: side, height: side)
+    let frame = CGRect(x: 0, y: 30, width: side, height: side)
     gameView = GameView(frame: frame)
     view.addSubview(gameView)
     gameView.completed = { game in

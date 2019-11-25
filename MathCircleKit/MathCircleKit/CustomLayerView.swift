@@ -5,18 +5,14 @@ public class CustomLayerView<T: CALayer>: UIView {
   public var customLayer: T { return layer as! T }
 }
 
-// MARK: -
-
-public typealias ShapeLayerView = CustomLayerView<CAShapeLayer>
-
-public func shapeLayerView(
-  frame: CGRect,
-  stroke: UIColor = .black,
-  fill: UIColor = .clear
-) -> ShapeLayerView {
-  let rootView = ShapeLayerView(frame: frame)
-  rootView.customLayer.strokeColor = stroke.cgColor
-  rootView.customLayer.fillColor = fill.cgColor
-  return rootView
+extension CustomLayerView where T: CAShapeLayer {
+  public convenience init(
+    shapeWithFrame frame: CGRect,
+    stroke: UIColor = .black,
+    fill: UIColor = .clear
+  ) {
+    self.init(frame: frame)
+    customLayer.strokeColor = stroke.cgColor
+    customLayer.fillColor = fill.cgColor
+  }
 }
-
