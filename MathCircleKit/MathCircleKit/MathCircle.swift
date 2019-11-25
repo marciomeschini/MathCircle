@@ -64,7 +64,7 @@ public func selectedPath(from paths: [[UIBezierPath]], at point: CGPoint) -> Sel
 public func background(_ mathCircle: MathCircle) -> UIBezierPath {
   let path = UIBezierPath()
   mathCircle.circles.forEach { path.append(.circle($0)) }
-  path.append(.dot(mathCircle.center))
+//  path.append(.dot(mathCircle.center))
   mathCircle.lines.flatMap { $0 }.map { Drawing.line($0) }.forEach(path.append)
   return path
 }

@@ -17,10 +17,20 @@ public struct Game {
 }
 
 extension Game {
-  public enum Answer {
+  public enum Answer: Equatable {
     case correct
     case missing
-    case wrong
+    case wrong(Int)
+  }
+}
+
+extension Game.Answer {
+  init(value: String, expected: Int) {
+    switch value {
+    case "\(expected)": self = .correct
+    case "":            self = .missing
+    default:            self = .wrong(Int(value) ?? -1) // :-[
+    }
   }
 }
 
@@ -51,6 +61,7 @@ func makeBitmap(mathCircle: MathCircle, game: Game, size: CGSize) -> UIImage {
         return Item(circleIndex: circleIndex, index: index, midPoint: p, value: "")
       }
     }
+
     let evaluated = zip(items, [game.values0, game.values1]).map { current, values in
       zip(current, values).map { item, value in
         return Item(circleIndex: item.circleIndex, index: item.index, midPoint: item.midPoint, value: "\(value)")
