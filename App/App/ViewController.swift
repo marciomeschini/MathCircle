@@ -41,7 +41,7 @@ class ViewController: UIViewController {
       count: count,
       countOfCircles: 3
     )
-    let factor = Int.random(in: 2...10)
+    let factor = Int.random(in: 2...count)
     let game = Game(count: count, factor: factor)
 
     gameView.configure(mathCircle, game: game)

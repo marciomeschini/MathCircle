@@ -36,13 +36,20 @@ public final class GameView: UIView {
       stroke: .black,
       fill: UIColor.blue.withAlphaComponent(0.2)
     )
-    selectionView.customLayer.lineWidth = 2
+    selectionView.custom.lineWidth = 2
     super.init(frame: frame)
     bitmapView.frame = bounds
 
     textField.leftView = label
     textField.leftViewMode = .always
     textField.keyboardType = .numberPad
+    let nextButton = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(next(_:)))
+    let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+    let toolbar = UIToolbar()
+    toolbar.sizeToFit()
+    toolbar.items = [space, nextButton]
+    textField.inputAccessoryView = toolbar
+    
     [correctView, bitmapView, pathView, coverView, errorView, selectionView, textField].forEach(addSubview)
     
     let gesture = UITapGestureRecognizer(target: self, action: #selector(tap(_:)))
@@ -54,13 +61,10 @@ public final class GameView: UIView {
   public func configure(_ mathCircle: MathCircle, game: Game) {
     self.mathCircle = mathCircle
     self.game = game
-    selectionView.customLayer.path = nil
     
-    let path = UIBezierPath()
-    path.append(background(mathCircle))
-    pathView.customLayer.path = path.cgPath
-    
-    bitmapView.image = makeBitmap(mathCircle: mathCircle, game: game, size: bounds.size)
+    selectionView.custom.path = nil
+    pathView.custom.path = background(mathCircle).cgPath
+    bitmapView.image = GameImageRenderer(mathCircle: mathCircle, game: game, size: bounds.size).image
     
     updateSlices()
     
@@ -68,13 +72,6 @@ public final class GameView: UIView {
     label.sizeToFit()
     textField.frame = CGRect(x: 0, y: 0, width: 130, height: 40)
     textField.center = CGPoint(x: bounds.midX, y: bounds.midY)
-    
-    let nextButton = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(next(_:)))
-    let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-    let toolbar = UIToolbar()
-    toolbar.sizeToFit()
-    toolbar.items = [space, nextButton]
-    textField.inputAccessoryView = toolbar
     
     selectFirst()
   }
@@ -89,7 +86,7 @@ public final class GameView: UIView {
     let path = UIBezierPath()
     let new = UIBezierPath(cgPath: path.cgPath)
     new.append(selection.path)
-    selectionView.customLayer.path = new.cgPath
+    selectionView.custom.path = new.cgPath
     
     let answer = game.answers[selection.indexes.slice]
     if answer == .missing {
@@ -108,27 +105,27 @@ public final class GameView: UIView {
   }
   
   private func updateSlices() {
-    let filter: (Game.Answer) -> [Drawing] = { filter in
-      return zip(self.mathCircle.slices[1], self.game.answers).filter { $0.1 == filter }.map { $0.0 }
+    // ((Drawing, Answer) -> ((Answer) -> Bool) -> [Drawing]
+    let makeFilter: ([Drawing], [Game.Answer]) -> ((Game.Answer) -> Bool) -> [Drawing] = { drawings, answers in
+      { f in zip(drawings, answers).filter { f($0.1) }.map { $0.0 } }
     }
+    let filter = makeFilter(self.mathCircle.slices[1], self.game.answers)
     
     let missings = UIBezierPath()
-    filter(.missing).map(UIBezierPath.init).forEach(missings.append)
-    coverView.customLayer.path = missings.cgPath
+    filter { $0 == .missing }.map(UIBezierPath.init).forEach(missings.append)
+    coverView.custom.path = missings.cgPath
     
     let errors = UIBezierPath()
-    let wrong = zip(self.mathCircle.slices[1], self.game.answers).filter { tuple in
-      if case .wrong = tuple.1 { return true }
+    filter {
+      if case .wrong = $0 { return true }
       return false
-    }.map { $0.0 }
-    wrong.forEach(errors.append)
-    errorView.customLayer.path = errors.cgPath
+    }.map(UIBezierPath.init).forEach(errors.append)
+    errorView.custom.path = errors.cgPath
     
     let correct = UIBezierPath()
-    filter(.correct).map(UIBezierPath.init).forEach(correct.append)
-    correctView.customLayer.path = correct.cgPath
+    filter { $0 == .correct }.map(UIBezierPath.init).forEach(correct.append)
+    correctView.custom.path = correct.cgPath
   }
-
   
   @objc func tap(_ sender: UITapGestureRecognizer) {
     let point = sender.location(in: sender.view)
@@ -148,19 +145,13 @@ public final class GameView: UIView {
     let index = selection.indexes.slice
     let answer = game.answers[index]
     if answer == .missing {
-      let expected = game.values1[index]
-      print("Expected: \(expected)")
-      print("Input: \(textField.text ?? "")")
-      let answer = Game.Answer(value: textField.text ?? "", expected: expected)
-      game.answers[index] = answer
-      print(answer)
+      game = game.updated(at: index, input: textField.text)
     }
     
     updateSlices()
     
     if isFinished() {
-      print("isFinished!")
-      selectionView.customLayer.path = nil
+      selectionView.custom.path = nil
       completed(game)
       return
     }
@@ -169,18 +160,13 @@ public final class GameView: UIView {
     if nextSliceIndex >= mathCircle.count {
       nextSliceIndex = 0
     }
-    let slice = mathCircle.slices[selection.indexes.circle][nextSliceIndex]
-    let path = UIBezierPath(slice)
+    let path = mathCircle.paths[selection.indexes.circle][nextSliceIndex]
     let newSelection = Selection(indexes: (selection.indexes.circle, nextSliceIndex), path: path)
-
     updateSelection(newSelection)
   }
   
   private func selectFirst() {
-    let slice = mathCircle.slices[1][0]
-    let path = UIBezierPath(slice)
-    let newSelection = Selection(indexes: (1, 0), path: path)
-
+    let newSelection = Selection(indexes: (1, 0), path: mathCircle.paths[1][0])
     updateSelection(newSelection)
   }
 }

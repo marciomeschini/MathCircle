@@ -4,15 +4,15 @@ public struct MathCircle {
   public let side: CGFloat // fix me, should be radius
   public let center: CGPoint
   public let count: Int
-  public let values: [CGFloat]
   public let countOfCircles: Int
   
-  public let circles: [Circle]
-  public let lines: [[Line]]
-  public let arcs: [[Arc]]
-  public let midPoints: [[MidPoint]]
-  public let slices: [[Drawing]]
-  public let paths: [[UIBezierPath]]
+  let values: [CGFloat]
+  let circles: [Circle]
+  let lines: [[Line]]
+  let arcs: [[Arc]]
+  let midPoints: [[MidPoint]]
+  let slices: [[Drawing]]
+  let paths: [[UIBezierPath]]
   
   public init(side: CGFloat, center: CGPoint, count: Int, countOfCircles: Int = 3) {
     self.side = side
@@ -47,12 +47,12 @@ public struct MathCircle {
 
 // MARK: -
 
-public struct Selection {
-  public let indexes: (circle: Int, slice: Int)
-  public let path: UIBezierPath
+struct Selection {
+  let indexes: (circle: Int, slice: Int)
+  let path: UIBezierPath
 }
 
-public func selectedPath(from paths: [[UIBezierPath]], at point: CGPoint) -> Selection? {
+func selectedPath(from paths: [[UIBezierPath]], at point: CGPoint) -> Selection? {
   guard let indices = paths.indices(where: { return $0.contains(point) }) else {
     return nil
   }
@@ -61,7 +61,7 @@ public func selectedPath(from paths: [[UIBezierPath]], at point: CGPoint) -> Sel
 
 // MARK: -
 
-public func background(_ mathCircle: MathCircle) -> UIBezierPath {
+func background(_ mathCircle: MathCircle) -> UIBezierPath {
   let path = UIBezierPath()
   mathCircle.circles.forEach { path.append(.circle($0)) }
 //  path.append(.dot(mathCircle.center))

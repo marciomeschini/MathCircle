@@ -1,12 +1,12 @@
 import UIKit
 
-public let π = CGFloat.pi
-public let π2 = π/2
-public let π4 = π/4
+let π = CGFloat.pi
+let π2 = π/2
+let π4 = π/4
 
 // MARK: -
 
-public enum Drawing {
+enum Drawing {
   case arc(Arc)
   case circle(Circle)
   case dot(CGPoint)
@@ -15,12 +15,12 @@ public enum Drawing {
 }
 
 extension UIBezierPath {
-  public convenience init(_ drawing: Drawing) {
+  convenience init(_ drawing: Drawing) {
     self.init()
     append(drawing)
   }
   
-  public func append(_ drawing: Drawing) {
+  func append(_ drawing: Drawing) {
     switch drawing {
     case let .arc(a):
       addArc(
@@ -51,13 +51,13 @@ extension UIBezierPath {
 
 // MARK: -
 
-public struct Arc {
-  public let circle: Circle
-  public let start: CGFloat
-  public let end: CGFloat
-  public let clockwise: Bool
+struct Arc {
+  let circle: Circle
+  let start: CGFloat
+  let end: CGFloat
+  let clockwise: Bool
   
-  public init(_ circle: Circle, start: CGFloat, end: CGFloat, clockwise: Bool = true) {
+  init(_ circle: Circle, start: CGFloat, end: CGFloat, clockwise: Bool = true) {
     self.circle = circle
     self.start = start
     self.end = end
@@ -66,11 +66,11 @@ public struct Arc {
 }
 
 extension Arc {
-  public var flipped: Arc {
+  var flipped: Arc {
     return .init(circle, start: end, end: start, clockwise: !clockwise)
   }
   
-  public func mid(with arc: Arc) -> MidPoint {
+  func mid(with arc: Arc) -> MidPoint {
     let dt = end - start
     let t = start + dt*0.5
     let dr = circle.radius - arc.circle.radius
@@ -82,11 +82,11 @@ extension Arc {
 
 // MARK: -
 
-public struct MidPoint {
-  public let point: CGPoint
-  public let t: CGFloat
+struct MidPoint {
+  let point: CGPoint
+  let t: CGFloat
   
-  public init(point: CGPoint, t: CGFloat) {
+  init(point: CGPoint, t: CGFloat) {
     self.point = point
     self.t = t
   }
@@ -94,29 +94,29 @@ public struct MidPoint {
 
 // MARK: -
 
-public struct Circle {
-  public let center: CGPoint
-  public let radius: CGFloat
-  public let start: CGFloat
+struct Circle {
+  let center: CGPoint
+  let radius: CGFloat
+  let start: CGFloat
   
-  public init(center: CGPoint, radius: CGFloat, start: CGFloat = 0) {
+  init(center: CGPoint, radius: CGFloat, start: CGFloat = 0) {
     self.center = center
     self.radius = radius
     self.start = start
   }
   
-  public func point(at t: CGFloat) -> CGPoint {
+  func point(at t: CGFloat) -> CGPoint {
     return CircleEquation(center: center, radius: radius, t: t + start).p
   }
 }
 
 // MARK: -
 
-public struct Line {
-  public let a: CGPoint
-  public let b: CGPoint
+struct Line {
+  let a: CGPoint
+  let b: CGPoint
   
-  public init(a: CGPoint, b: CGPoint) {
+  init(a: CGPoint, b: CGPoint) {
     self.a = a
     self.b = b
   }
@@ -124,11 +124,11 @@ public struct Line {
 
 // MARK: -
 
-public struct Slice {
-  public let top: Arc
-  public let bottom: Arc
+struct Slice {
+  let top: Arc
+  let bottom: Arc
   
-  public init(top: Arc, bottom: Arc) {
+  init(top: Arc, bottom: Arc) {
     self.top = top
     self.bottom = bottom
   }
