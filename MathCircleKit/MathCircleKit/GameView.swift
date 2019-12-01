@@ -1,7 +1,7 @@
 import UIKit
 
 public final class GameView: UIView {
-  private(set) var mathCircle: MathCircle = MathCircle(side: 1, center: .zero, count: 1, countOfCircles: 1)
+  private(set) var mathCircle: MathCircle = MathCircle(radius: 1, center: .zero, count: 1, countOfCircles: 1)
   private(set) var game: Game = Game(count: 1, factor: 1)
   let pathView: CustomLayerView<CAShapeLayer>
   let coverView: CustomLayerView<CAShapeLayer>

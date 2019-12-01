@@ -31,12 +31,12 @@ class ViewController: UIViewController {
   }
   
   private func newGame() {
-    let side: CGFloat = view.bounds.width
-    let center = CGPoint(x: side*0.5, y: side*0.5)
+    let radius: CGFloat = view.bounds.width*0.5
+    let center = CGPoint(x: radius, y: radius)
     let count = 5
 
     let mathCircle = MathCircle(
-      side: side-10,
+      radius: radius-5,
       center: center,
       count: count,
       countOfCircles: 3
@@ -48,3 +48,6 @@ class ViewController: UIViewController {
   }
 }
 
+// select count [5, 12]
+// select factor/random [2, 12]/ (yes, no)
+// show history

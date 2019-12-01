@@ -1,7 +1,7 @@
 import UIKit
 
 public struct MathCircle {
-  public let side: CGFloat // fix me, should be radius
+  public let radius: CGFloat // fix me, should be radius
   public let center: CGPoint
   public let count: Int
   public let countOfCircles: Int
@@ -14,16 +14,16 @@ public struct MathCircle {
   let slices: [[Drawing]]
   let paths: [[UIBezierPath]]
   
-  public init(side: CGFloat, center: CGPoint, count: Int, countOfCircles: Int = 3) {
-    self.side = side
+  public init(radius: CGFloat, center: CGPoint, count: Int, countOfCircles: Int = 3) {
+    self.radius = radius
     self.center = center
     self.count = count
     self.countOfCircles = countOfCircles
     let values = (0...count).map { 2 * π * CGFloat($0)/CGFloat(count) }
     self.values = values
-    let single = side*0.5/(CGFloat(countOfCircles)+0.5)
+    let single = radius/(CGFloat(countOfCircles)+0.5)
     let widths = Array((0..<countOfCircles).map { CGFloat($0) * single }.reversed())
-    let circles = widths.map { Circle(center: center, radius: side*0.5-$0, start: -π2) }
+    let circles = widths.map { Circle(center: center, radius: radius-$0, start: -π2) }
     self.circles = circles
     let lines = circles.tupledByTwo().map { c0, c1 in
       return values.map { Line(a: c0.point(at: $0), b: c1.point(at: $0)) }
