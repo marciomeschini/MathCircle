@@ -4,6 +4,7 @@ import UIKit
 class ViewController: UIViewController {
   var gameView: GameView!
   var history = [Game]()
+  var count = 5
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -20,24 +21,37 @@ class ViewController: UIViewController {
       let alert = UIAlertController(title: "Done!", message: nil, preferredStyle: .actionSheet)
       alert.addAction(.init(title: "New", style: .default) { _ in
         self.newGame()
+        self.gameView.selectFirst()
       })
-      alert.addAction(.init(title: "Log", style: .default) { _ in
-        
+      alert.addAction(.init(title: "Settings", style: .default) { _ in
+        self.presentSettings()
       })
       self.present(alert, animated: true)
     }
 
     newGame()
+    gameView.selectFirst()
+    
+//    let button = UIButton(frame: CGRect(x: 10, y: 10, width: 60, height: 40))
+//    button.backgroundColor = .red
+//    button.addTarget(self, action: #selector(presentSettings), for: .touchUpInside)
+//    view.addSubview(button)
+  }
+  
+  @objc func presentSettings() {
+    let settings = SettingsViewController(initial: count) {
+      self.count = $0
+      self.newGame()
+    }
+    settings.presentationController?.delegate = self
+    self.present(settings, animated: true)
   }
   
   private func newGame() {
-    let radius: CGFloat = view.bounds.width*0.5
-    let center = CGPoint(x: radius, y: radius)
-    let count = 5
+    let radius: CGFloat = gameView.bounds.width*0.5
 
     let mathCircle = MathCircle(
       radius: radius-5,
-      center: center,
       count: count,
       countOfCircles: 3
     )
@@ -45,6 +59,12 @@ class ViewController: UIViewController {
     let game = Game(count: count, factor: factor)
 
     gameView.configure(mathCircle, game: game)
+  }
+}
+
+extension ViewController: UIAdaptivePresentationControllerDelegate {
+  func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+    gameView.selectFirst()
   }
 }
 

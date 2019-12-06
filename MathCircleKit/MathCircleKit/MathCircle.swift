@@ -2,7 +2,6 @@ import UIKit
 
 public struct MathCircle {
   public let radius: CGFloat // fix me, should be radius
-  public let center: CGPoint
   public let count: Int
   public let countOfCircles: Int
   
@@ -14,15 +13,15 @@ public struct MathCircle {
   let slices: [[Drawing]]
   let paths: [[UIBezierPath]]
   
-  public init(radius: CGFloat, center: CGPoint, count: Int, countOfCircles: Int = 3) {
+  public init(radius: CGFloat, count: Int, countOfCircles: Int = 3) {
     self.radius = radius
-    self.center = center
     self.count = count
     self.countOfCircles = countOfCircles
     let values = (0...count).map { 2 * π * CGFloat($0)/CGFloat(count) }
     self.values = values
     let single = radius/(CGFloat(countOfCircles)+0.5)
     let widths = Array((0..<countOfCircles).map { CGFloat($0) * single }.reversed())
+    let center = CGPoint(x: radius, y: radius)
     let circles = widths.map { Circle(center: center, radius: radius-$0, start: -π2) }
     self.circles = circles
     let lines = circles.tupledByTwo().map { c0, c1 in
@@ -61,7 +60,7 @@ func selectedPath(from paths: [[UIBezierPath]], at point: CGPoint) -> Selection?
 
 // MARK: -
 
-func background(_ mathCircle: MathCircle) -> UIBezierPath {
+public func background(_ mathCircle: MathCircle) -> UIBezierPath {
   let path = UIBezierPath()
   mathCircle.circles.forEach { path.append(.circle($0)) }
 //  path.append(.dot(mathCircle.center))

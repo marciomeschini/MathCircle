@@ -16,6 +16,7 @@
 		E42075C323821C7A001A4D21 /* AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42075C223821C7A001A4D21 /* AppTests.swift */; };
 		E42075CF23821C84001A4D21 /* MathCircleKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E42075CE23821C84001A4D21 /* MathCircleKit.framework */; };
 		E42075D023821C84001A4D21 /* MathCircleKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E42075CE23821C84001A4D21 /* MathCircleKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E4ED97172399D31C000A1FDA /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4ED97162399D31C000A1FDA /* SettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		E42075C223821C7A001A4D21 /* AppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTests.swift; sourceTree = "<group>"; };
 		E42075C423821C7A001A4D21 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E42075CE23821C84001A4D21 /* MathCircleKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MathCircleKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4ED97162399D31C000A1FDA /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 				E42075AB23821C79001A4D21 /* AppDelegate.swift */,
 				E42075AD23821C79001A4D21 /* SceneDelegate.swift */,
 				E42075AF23821C79001A4D21 /* ViewController.swift */,
+				E4ED97162399D31C000A1FDA /* SettingsViewController.swift */,
 				E42075B123821C79001A4D21 /* Main.storyboard */,
 				E42075B423821C7A001A4D21 /* Assets.xcassets */,
 				E42075B623821C7A001A4D21 /* LaunchScreen.storyboard */,
@@ -231,6 +234,7 @@
 				E42075B023821C79001A4D21 /* ViewController.swift in Sources */,
 				E42075AC23821C79001A4D21 /* AppDelegate.swift in Sources */,
 				E42075AE23821C79001A4D21 /* SceneDelegate.swift in Sources */,
+				E4ED97172399D31C000A1FDA /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -391,6 +395,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6R5UL4Y25B;
 				INFOPLIST_FILE = App/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -408,6 +413,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6R5UL4Y25B;
 				INFOPLIST_FILE = App/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

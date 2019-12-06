@@ -1,7 +1,7 @@
 import UIKit
 
 public final class GameView: UIView {
-  private(set) var mathCircle: MathCircle = MathCircle(radius: 1, center: .zero, count: 1, countOfCircles: 1)
+  private(set) var mathCircle: MathCircle = MathCircle(radius: 1, count: 1, countOfCircles: 1)
   private(set) var game: Game = Game(count: 1, factor: 1)
   let pathView: CustomLayerView<CAShapeLayer>
   let coverView: CustomLayerView<CAShapeLayer>
@@ -15,27 +15,12 @@ public final class GameView: UIView {
   public var completed: (Game) -> Void = { _ in }
   
   public override init(frame: CGRect) {
-    pathView = CustomLayerView(shapeWithFrame: CGRect(origin: .zero, size: frame.size))
-    coverView = CustomLayerView(
-      shapeWithFrame: CGRect(origin: .zero, size: frame.size),
-      stroke: .black,
-      fill: UIColor.white//.withAlphaComponent(0.75)
-    )
-    correctView = CustomLayerView(
-      shapeWithFrame: CGRect(origin: .zero, size: frame.size),
-      stroke: .black,
-      fill: .green
-    )
-    errorView = CustomLayerView(
-      shapeWithFrame: CGRect(origin: .zero, size: frame.size),
-      stroke: .black,
-      fill: .red
-    )
-    selectionView = CustomLayerView(
-      shapeWithFrame: CGRect(origin: .zero, size: frame.size),
-      stroke: .black,
-      fill: UIColor.blue.withAlphaComponent(0.2)
-    )
+    let shapeFrame = CGRect(origin: .zero, size: frame.size)
+    pathView = CustomLayerView(shapeWithFrame: shapeFrame)
+    coverView = CustomLayerView(shapeWithFrame: shapeFrame, fill: .white)
+    correctView = CustomLayerView(shapeWithFrame: shapeFrame, fill: .green)
+    errorView = CustomLayerView(shapeWithFrame: shapeFrame, fill: .red)
+    selectionView = CustomLayerView(shapeWithFrame: shapeFrame, fill: UIColor.blue.withAlphaComponent(0.2))
     selectionView.custom.lineWidth = 2
     super.init(frame: frame)
     bitmapView.frame = bounds
@@ -52,8 +37,7 @@ public final class GameView: UIView {
     
     [correctView, bitmapView, pathView, coverView, errorView, selectionView, textField].forEach(addSubview)
     
-    let gesture = UITapGestureRecognizer(target: self, action: #selector(tap(_:)))
-    addGestureRecognizer(gesture)
+    addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tap(_:))))
   }
   
   required init?(coder: NSCoder) { fatalError() }
@@ -64,7 +48,8 @@ public final class GameView: UIView {
     
     selectionView.custom.path = nil
     pathView.custom.path = background(mathCircle).cgPath
-    bitmapView.image = GameImageRenderer(mathCircle: mathCircle, game: game, size: bounds.size).image
+    let values = [game.values0.map(String.init), game.values1.map(String.init)]
+    bitmapView.image = MidPointsImageRenderer(midPoints: mathCircle.midPoints, size: bounds.size, values: values, shouldRotate: false).image
     
     updateSlices()
     
@@ -72,8 +57,6 @@ public final class GameView: UIView {
     label.sizeToFit()
     textField.frame = CGRect(x: 0, y: 0, width: 130, height: 40)
     textField.center = CGPoint(x: bounds.midX, y: bounds.midY)
-    
-    selectFirst()
   }
   
   private func updateSelection(_ selection: Selection) {
@@ -83,10 +66,7 @@ public final class GameView: UIView {
     let expected = game.values1[selection.indexes.slice]
     print("Expected: \(expected)")
     
-    let path = UIBezierPath()
-    let new = UIBezierPath(cgPath: path.cgPath)
-    new.append(selection.path)
-    selectionView.custom.path = new.cgPath
+    selectionView.custom.path = selection.path.cgPath
     
     let answer = game.answers[selection.indexes.slice]
     if answer == .missing {
@@ -165,7 +145,7 @@ public final class GameView: UIView {
     updateSelection(newSelection)
   }
   
-  private func selectFirst() {
+  public func selectFirst() {
     let newSelection = Selection(indexes: (1, 0), path: mathCircle.paths[1][0])
     updateSelection(newSelection)
   }
